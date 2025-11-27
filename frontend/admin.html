@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Panel — Manage Jobs</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f8fafc;
+    }
+
+    th {
+      position: sticky;
+      top: 0;
+      background: #e2e8f0;
+      z-index: 10;
+    }
+  </style>
+</head>
+
+<body class="p-6">
+  <script>
+    if (localStorage.getItem("isAdmin") !== "true") {
+      alert("Access Denied!");
+      window.location.href = "landing.html";
+    }
+  </script>
+  <a href="audit.html" target="_blank" class="fixed top-4 right-4 z-50">
+    <button class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded shadow">
+      View Audit Logs
+    </button>
+  </a>
+
+  <div class="max-w-6xl mx-auto">
+    <h1 class="text-3xl font-bold text-center mb-6">🛠 Admin Panel — Manage NCO Jobs</h1>
+
+    <!-- Search -->
+    <div class="mb-4">
+      <input type="text" id="searchBox" placeholder="Search by title or code..."
+        class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-400 focus:outline-none">
+    </div>
+
+    <!-- Add/Edit Form -->
+    <form id="jobForm" class="bg-white rounded-lg shadow-md p-4 mb-6 grid grid-cols-1 md:grid-cols-3 gap-4">
+      <input type="hidden" id="editIndex" />
+
+      <div>
+        <label class="block font-semibold">Job Code</label>
+        <input type="text" id="jobCode" required
+          class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none" />
+      </div>
+
+      <div>
+        <label class="block font-semibold">Job Title</label>
+        <input type="text" id="jobTitle" required
+          class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none" />
+      </div>
+
+      <div class="md:col-span-3">
+        <label class="block font-semibold">Job Description</label>
+        <textarea id="jobDescription" rows="3" required
+          class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none"></textarea>
+      </div>
+
+      <div class="md:col-span-3 flex gap-4">
+        <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white px-5 py-2 rounded-lg shadow">💾 Save
+          Job</button>
+        <button type="reset" class="bg-gray-400 hover:bg-gray-500 text-white px-5 py-2 rounded-lg shadow">Clear</button>
+      </div>
+    </form>
+
+    <!-- Table -->
+    <div class="overflow-x-auto shadow rounded-lg">
+      <table class="min-w-full border border-gray-200 bg-white">
+        <thead>
+          <tr>
+            <th class="py-2 px-4 border-b">Code</th>
+            <th class="py-2 px-4 border-b">Title</th>
+            <th class="py-2 px-4 border-b">Description</th>
+            <th class="py-2 px-4 border-b">Actions</th>
+          </tr>
+        </thead>
+        <tbody id="jobTableBody"></tbody>
+      </table>
+    </div>
+
+    <!-- Download Button -->
+    <div class="mt-6 text-center">
+      <button id="downloadBtn"
+        class="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg text-lg">
+        ⬇ Download Updated JSON
+      </button>
+    </div>
+  </div>
+
+  <script src="admin.js"></script>
+
+  <script>
+    // Search filter
+    document.getElementById("searchBox").addEventListener("input", function () {
+      const search = this.value.toLowerCase();
+      const rows = document.querySelectorAll("#jobTableBody tr");
+      rows.forEach(row => {
+        const text = row.textContent.toLowerCase();
+        row.style.display = text.includes(search) ? "" : "none";
+      });
+    });
+  </script>
+</body>
+
+</html>

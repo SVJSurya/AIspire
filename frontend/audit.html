@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Audit Logs</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { font-family: 'Poppins', sans-serif; background: #f8fafc; }
+    th { position: sticky; top: 0; background: #e2e8f0; z-index: 10; }
+  </style>
+</head>
+<body class="p-6">
+  <h1 class="text-3xl font-bold text-center mb-6">📜 Audit Report</h1>
+
+  <!-- Search Bar -->
+  <div class="flex gap-4 mb-4">
+    <select id="searchCategory" class="border px-3 py-2 rounded-lg">
+      <option value="device">Device</option>
+      <option value="action">Action</option>
+      <option value="time">Time</option>
+    </select>
+    <input type="text" id="searchInput" placeholder="Search..."
+      class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-400">
+  </div>
+
+  <!-- Table -->
+  <div class="overflow-x-auto shadow rounded-lg">
+    <table class="min-w-full border border-gray-200 bg-white">
+      <thead>
+        <tr>
+          <th class="py-2 px-4 border-b">Device</th>
+          <th class="py-2 px-4 border-b">Action</th>
+          <th class="py-2 px-4 border-b">Time</th>
+          <th class="py-2 px-4 border-b">Details</th>
+        </tr>
+      </thead>
+      <tbody id="auditTableBody"></tbody>
+    </table>
+  </div>
+
+  <script>
+    const API_BASE = "http://127.0.0.1:5000";
+    let logs = [];
+
+    async function loadAudit() {
+      try {
+        const res = await fetch(`${API_BASE}/get_audit_logs`);
+        logs = await res.json();
+        renderAudit(logs);
+      } catch (err) {
+        console.error("Error loading audit log:", err);
+      }
+    }
+
+    function renderAudit(data) {
+      const body = document.getElementById("auditTableBody");
+      body.innerHTML = "";
+      data.forEach(log => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td class="border px-4 py-2">${log.device}</td>
+          <td class="border px-4 py-2">${log.action}</td>
+          <td class="border px-4 py-2">${log.time}</td>
+          <td class="border px-4 py-2"><pre class="whitespace-pre-wrap text-sm">${JSON.stringify(log.details, null, 2)}</pre></td>
+        `;
+        body.appendChild(row);
+      });
+    }
+
+    document.getElementById("searchInput").addEventListener("input", function() {
+      const category = document.getElementById("searchCategory").value;
+      const term = this.value.toLowerCase();
+      const filtered = logs.filter(log => 
+        String(log[category]).toLowerCase().includes(term)
+      );
+      renderAudit(filtered);
+    });
+
+    loadAudit();
+  </script>
+</body>
+</html>

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Locate Nearest Training Center</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+ <style>
+  body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg, #e2f2ff 0%, #b4e0ff 60%, #ffffff 100%);
+    color: #14375a;
+    margin: 0;
+    min-height: 87vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+  }
+  h2 {
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  .map-container {
+    background: rgba(255, 255, 255, 0.52);
+    box-shadow: 0 8px 32px 0 rgba(104, 164, 255, 0.12);
+    border: 1.5px solid rgba(183, 231, 255, 0.3);
+    border-radius: 2rem;
+    backdrop-filter: blur(22px);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  #map {
+    height: 500px;
+    width: 800px;
+    border-radius: 1rem;
+  }
+  .controls {
+    margin-bottom: 15px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  select, button {
+    padding: 8px 16px;
+    border-radius: 6px;
+    border: none;
+    font-size: 14px;
+  }
+  button {
+    background: #0ea5e9;
+    color: white;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  button:hover {
+    background: #b1e5fd;
+    color: #14375a;
+  }
+  @media (max-width: 900px) {
+    #map { width: 100%; height: 400px; }
+  }
+</style>
+</head>
+<body>
+  <h2>Locate Nearest Training Center</h2>
+  <div class="map-container">
+    <div class="controls">
+      <select id="citySelect">
+        <option value="NCR">NCR</option>
+        <option value="Lucknow">Lucknow</option>
+        <option value="Gurgaon">Gurgaon</option>
+      </select>
+      <button id="searchBtn">Search</button>
+      <button id="locateBtn">Show My Location</button>
+    </div>
+    <div id="map"></div>
+  </div>
+
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script>
+    const redIcon = new L.Icon({
+      iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png',
+      shadowUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png',
+      iconSize: [25, 41],
+      iconAnchor: [12, 41],
+      popupAnchor: [1, -34],
+      shadowSize: [41, 41]
+    });
+
+    const blueIcon = new L.Icon({
+      iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-blue.png',
+      shadowUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png',
+      iconSize: [25, 41],
+      iconAnchor: [12, 41],
+      popupAnchor: [1, -34],
+      shadowSize: [41, 41]
+    });
+
+    let map = L.map('map');
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    const cityCenters = {
+      NCR: [
+        { center: "Country Delight", type: "PMKVY", address: "Plot No. 3/3a Block-CB Sector 44, Noida, Uttar Pradesh 201303", email: "shivkumar@countrydelight.in", lat: 28.5675, lng: 77.3349 },
+        { center: "PMKK JITM Gautam Budh Nagar", type: "PMKVY", address: "Plot No. 29D, Knowledge Park-1, Greater Noida, Uttar Pradesh 201310", email: "Gautambudhnagar.pmkk@jitmskills.com", lat: 28.4744, lng: 77.4912 },
+        { center: "Kolvin Management Solutions Pvt. Ltd.", type: "PMKVY", address: "A-14, Sector 68, Noida, Uttar Pradesh", email: "vishwakarmashanu778@gmail.com", lat: 28.5843, lng: 77.3921 },
+        { center: "Kolvin Management Solutions Pvt. Ltd.", type: "PMKVY", address: "B-48, Noida Phase-II, Gautam Buddha Nagar, Uttar Pradesh", email: "Sanjayvishwakarma9899@gmail.com", lat: 28.5901, lng: 77.4033 },
+        { center: "LAVA-TSSC (Uttar Pradesh)", type: "PMKVY", address: "D-348, Sector 63, Noida, Uttar Pradesh", email: "info@kolvinmspl.com", lat: 28.6195, lng: 77.3839 },
+        { center: "Kolvin Management Solutions Pvt. Ltd.", type: "PMKVY", address: "2nd Floor, B-101 B Block, Sector 63, Noida, Uttar Pradesh 201301", email: "priyanka.s@globalskillers.com", lat: 28.6190, lng: 77.3822 },
+        { center: "Kolvin Management Solutions Pvt. Ltd.", type: "PMKVY", address: "A-7, Sector 65, Noida, Uttar Pradesh", email: "kolvinmspl.hr@gmail.com", lat: 28.6124, lng: 77.3808 }
+      ],
+      Lucknow: [
+        { center: "Mr Brown", type: "PMKVY", address: "CP3-CP4 Sitapur Road Yojana Basement 1 Jankipuram Lucknow Uttar Pradesh", email: "principal@dibcas.com", lat: 26.9265, lng: 80.9503 },
+        { center: "JSS Lucknow (Lh)", type: "PMKVY", address: "Literacy House Campus Kanpur Road Near Purani Chungi Manas Nagar Lucknow", email: "jsslkolh@gmail.com", lat: 26.8025, lng: 80.8921 },
+        { center: "JSS Lucknow (Aimwa)", type: "PMKVY", address: "2/234 Virat Khand Gomti Nagar Lucknow", email: "jssaimwalko@yahoo.in", lat: 26.8506, lng: 81.0010 },
+        { center: "TSSC We Win Limited Lucknow Center", type: "PMKVY", address: "5th & 6th floor Cyber Tower Vibhuti Khand Lucknow", email: "surbhi@wewinlimited.com", lat: 26.8537, lng: 81.0046 },
+        { center: "NIELIT Lucknow", type: "PMKVY", address: "A 1/9 Sumit Complex Vibhuti Khand Gomti Nagar Lucknow", email: "ghanshyam@nielit.gov.in", lat: 26.8542, lng: 81.0038 },
+        { center: "Mahendra Skills-PMKK LUCKNOW", type: "PMKVY", address: "Building Over Plot No.B-62 B-63 Sector H-Aliganj", email: "prishu25aug@gmail.com", lat: 26.8940, lng: 80.9394 },
+        { center: "AISECT PMKK Lucknow", type: "PMKVY", address: "578/785 Jai Sooraj Niwas Kudrat Vihar Kanpur Road Sarojini Nagar", email: "chetan.jain@aisect.org", lat: 26.7353, lng: 80.8885 }
+      ],
+      Gurgaon: [
+        { center: "OM Institute", type: "PMKVY", address: "KHASRA NO 2/11 State Highway No 26 Jamalpur HR", email: "ominstitute@omlogistics.co.in", lat: 28.4426, lng: 76.9969 },
+        { center: "Country Delight- Sect-5 Gurgaon", type: "PMKVY", address: "Khasra No. 7249/2772/1 Sheetla Mata Mandir Road Near Prince Vatika", email: "ashishmalik@countrydelight.in", lat: 28.4595, lng: 77.0266 },
+        { center: "GD Goenka University Sohna", type: "PMKVY", address: "GD Goenka University Campus Sohna Gurugram Road", email: "pankaj.jindal@gdgoenka.com", lat: 28.2467, lng: 77.0660 },
+        { center: "PMKK - Gurugram Centre", type: "PMKVY", address: "Kadipur Enclave", email: "neha.jawaliya20@gmail.com", lat: 28.5040, lng: 77.0256 },
+        { center: "Beejapuri Fresh Product Pvt. Ltd.", type: "PMKVY", address: "Sector 99A Gurgaon Haryana", email: "vishaljasuja@countrydelight.in", lat: 28.4673, lng: 76.9969 }
+      ]
+    };
+
+    let markers = L.featureGroup().addTo(map);
+
+    function plotCenters(city) {
+      markers.clearLayers();
+      const centers = cityCenters[city];
+      centers.forEach(c => {
+        let m = L.marker([c.lat, c.lng], { icon: redIcon })
+          .bindPopup(`<b>${c.center}</b><br>${c.type}<br>${c.address}<br>${c.email}`);
+        markers.addLayer(m);
+      });
+      map.fitBounds(markers.getBounds());
+    }
+
+    document.getElementById('searchBtn').addEventListener('click', () => {
+      const city = document.getElementById('citySelect').value;
+      plotCenters(city);
+    });
+
+    document.getElementById('locateBtn').addEventListener('click', () => {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(pos => {
+          const { latitude, longitude } = pos.coords;
+          let userMarker = L.marker([latitude, longitude], { icon: blueIcon })
+            .bindPopup("You are here")
+            .openPopup();
+          markers.addLayer(userMarker);
+          map.fitBounds(markers.getBounds());
+        });
+      } else {
+        alert("Geolocation is not supported by your browser.");
+      }
+    });
+
+    // Default load NCR centers
+    plotCenters("NCR");
+  </script>
+</body>
+</html>

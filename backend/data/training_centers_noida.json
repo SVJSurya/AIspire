@@ -1,0 +1,58 @@
+[
+  {
+    "center": "Country Delight",
+    "type": "PMKVY",
+    "address": "Plot No. 3/3a Block-CB Sector 44, Noida, Uttar Pradesh 201303",
+    "email": "shivkumar@countrydelight.in",
+    "lat": 28.5675,
+    "lng": 77.3349
+  },
+  {
+    "center": "PMKK JITM Gautam Budh Nagar",
+    "type": "PMKVY",
+    "address": "Plot No. 29D, Knowledge Park-1, Greater Noida, Uttar Pradesh 201310",
+    "email": "Gautambudhnagar.pmkk@jitmskills.com",
+    "lat": 28.4744,
+    "lng": 77.4912
+  },
+  {
+    "center": "Kolvin Management Solutions Pvt. Ltd.",
+    "type": "PMKVY",
+    "address": "A-14, Sector 68, Noida, Uttar Pradesh",
+    "email": "vishwakarmashanu778@gmail.com",
+    "lat": 28.5843,
+    "lng": 77.3921
+  },
+  {
+    "center": "Kolvin Management Solutions Pvt. Ltd.",
+    "type": "PMKVY",
+    "address": "B-48, Noida Phase-II, Gautam Buddha Nagar, Uttar Pradesh",
+    "email": "Sanjayvishwakarma9899@gmail.com",
+    "lat": 28.5901,
+    "lng": 77.4033
+  },
+  {
+    "center": "LAVA-TSSC (Uttar Pradesh)",
+    "type": "PMKVY",
+    "address": "D-348, Sector 63, Noida, Uttar Pradesh",
+    "email": "info@kolvinmspl.com",
+    "lat": 28.6195,
+    "lng": 77.3839
+  },
+  {
+    "center": "Kolvin Management Solutions Pvt. Ltd.",
+    "type": "PMKVY",
+    "address": "2nd Floor, B-101 B Block, Sector 63, Noida, Uttar Pradesh 201301",
+    "email": "priyanka.s@globalskillers.com",
+    "lat": 28.6190,
+    "lng": 77.3822
+  },
+  {
+    "center": "Kolvin Management Solutions Pvt. Ltd.",
+    "type": "PMKVY",
+    "address": "A-7, Sector 65, Noida, Uttar Pradesh",
+    "email": "kolvinmspl.hr@gmail.com",
+    "lat": 28.6124,
+    "lng": 77.3808
+  }
+]

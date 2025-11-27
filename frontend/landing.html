@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CareerScope.ai — Discover Your Future</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 87vh;
+      margin: 0;
+      background: linear-gradient(135deg, #abbdcc 0%, #b4e0ff 60%, #b1d7ea 100%);
+      color: #14375a;
+    }
+
+    /* Top-right small blue Admin button */
+    .admin-btn {
+      position: fixed;
+      /* always visible in top-right */
+      top: 20px;
+      right: 20px;
+      padding: 8px 16px;
+      background-color: #3b82f6;
+      /* Tailwind blue-500 */
+      color: white;
+      font-size: 14px;
+      font-weight: 600;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      transition: background-color 0.25s ease;
+      z-index: 1000;
+    }
+
+    .admin-btn:hover {
+      background-color: #051840;
+      /* Tailwind blue-600 */
+    }
+
+    /* Prevent unnecessary vertical scroll */
+    html,
+    body {
+      height: 100%;
+      overflow-y: auto;
+    }
+
+    main {
+      margin-top: 5rem;
+      /* adjust so content doesn't hide behind button */
+    }
+
+    .glass {
+      background: rgba(255, 255, 255, 0.52);
+      box-shadow: 0 8px 32px 0 rgba(104, 164, 255, 0.12);
+      border-radius: 2rem;
+      border: 1.5px solid rgba(183, 231, 255, 0.3);
+      backdrop-filter: blur(22px);
+    }
+
+    .scrolling-text {
+      animation: scroll-left 20s linear infinite;
+      color: #47a5eb;
+      font-weight: 600;
+    }
+
+    @keyframes scroll-left {
+      0% {
+        transform: translateX(100%);
+      }
+
+      100% {
+        transform: translateX(-100%);
+      }
+    }
+
+    .animated-button {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 18px 42px;
+      border: none;
+      background-color: #2d9ada;
+      color: #fff;
+      font-size: 18px;
+      font-weight: 700;
+      border-radius: 999px;
+      box-shadow: 0 3px 16px 0 rgba(50, 186, 228, 0.16);
+      cursor: pointer;
+      transition: all 0.25s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .animated-button .text {
+      z-index: 1;
+      position: relative;
+    }
+
+    .animated-button .circle {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 0;
+      height: 0;
+      background: rgba(64, 158, 217, 0.15);
+      border-radius: 50%;
+      opacity: 0;
+      z-index: 0;
+      transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    .bg-sky-500:hover {
+      background-color: transparent !important;
+      color: #010c18;
+      /* Dark blue text */
+      border-radius: 12px;
+      box-shadow: 0 0 0 12px transparent;
+      transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    .animated-button:hover {
+      color: #0f2d52;
+    }
+
+    .animated-button:hover .circle {
+      width: 240px;
+      height: 240px;
+      opacity: 1;
+    }
+
+    .animated-button svg {
+      fill: #fff;
+      transition: 0.4s;
+    }
+
+    .animated-button .arr-1 {
+      right: 18px;
+      position: absolute;
+      transition: right 0.4s;
+    }
+
+    .animated-button .arr-2 {
+      left: -38px;
+      position: absolute;
+      transition: left 0.4s;
+    }
+
+    .animated-button:hover .arr-1 {
+      right: -30px;
+    }
+
+    .animated-button:hover .arr-2 {
+      left: 18px;
+    }
+
+    .animated-button:active {
+      transform: scale(0.98);
+    }
+
+    .main-title {
+      background: linear-gradient(90deg, #3e9fe4 30%, #2ab9e7 90%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-fill-color: transparent;
+      font-weight: 800;
+      text-shadow: 0 2px 30px rgba(98, 193, 251, 0.18);
+    }
+
+    .tagline {
+      color: #256689;
+    }
+
+    .section-glass {
+      background: rgba(255, 255, 255, 0.30);
+      border-radius: 1.5rem;
+      box-shadow: 0 2px 8px 0 rgba(57, 181, 219, 0.045);
+      padding: 1rem 0;
+      margin-top: 2rem;
+      margin-bottom: 2rem;
+      backdrop-filter: blur(15px);
+    }
+
+    .accent,
+    a {
+      color: #35b7db;
+      transition: color 0.18s;
+    }
+
+    a:hover,
+    .accent:hover {
+      color: #1279b6;
+    }
+
+    footer {
+      color: #73a2be;
+      letter-spacing: 0.01em;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Main Glass Container -->
+  <!-- Inside the <div class="flex flex-wrap justify-center gap-6 mt-4"> -->
+  <a href="skillcard.html" id="skillCardBtn" class="admin-btn" style="right: 139px;">
+    Skill-Card
+  </a>
+  <a href="map.html" id="MapBtn" class="admin-btn" style="right: 239px;">
+    Map
+  </a>
+  <a href="#" id="adminLoginBtn" class="admin-btn">
+    Admin Login
+  </a>
+
+  <main class="max-w-4xl mx-auto mt-24 mb-16 px-10 pt-[7rem] pb-[4rem] glass text-center">
+    <h1 class="text-5xl md:text-6xl main-title mb-6">Discover Your Future</h1>
+    <p class="text-xl tagline mb-10 max-w-2xl mx-auto">
+      <span class="accent">AIspire</span> - A blend of AI and aspire
+    </p>
+    <div class="flex flex-wrap justify-center gap-6 mt-4">
+      <a href="index.html" class="animated-button">
+        <span class="text">Start Now</span>
+        <span class="circle"></span>
+        <svg class="arr-1" width="24" height="24" viewBox="0 0 24 24">
+          <path d="M12 4l8 8-8 8-1.41-1.41L16.17 12 10.59 6.41z" />
+        </svg>
+        <svg class="arr-2" width="24" height="24" viewBox="0 0 24 24">
+          <path d="M12 4l8 8-8 8-1.41-1.41L16.17 12 10.59 6.41z" />
+        </svg>
+      </a>
+      <a href="accessible.html"
+        class="px-8 py-4 bg-sky-500 hover:bg-sky-600 text-white text-lg font-semibold rounded-xl shadow-md transition">Accessible
+        Mode</a>
+    </div>
+  </main>
+  <!-- Scrolling Features Section -->
+  <section class="w-full overflow-hidden section-glass border-t border-b border-white border-opacity-25 py-7">
+    <div class="whitespace-nowrap scrolling-text text-lg font-semibold">
+      <span class="inline-block mx-12">🔍 AI-Powered Search</span>
+      <span class="inline-block mx-12">🎓 Personalized Career Suggestions</span>
+      <span class="inline-block mx-12">🌐 Accessibility Built-In</span>
+      <span class="inline-block mx-12">💡 Semantic AI Search </span>
+      <span class="inline-block mx-12">⚡ Fast & Accurate Matching</span>
+      <span class="inline-block mx-12">🔒 Secure & Private</span>
+      <span class="inline-block mx-12">🗺️ Training Center near You</span>
+      <span class="inline-block mx-12">🚀 Explore 1000+ Career Paths</span>
+      <span class="inline-block mx-12">💳 Customized Job Cards</span>
+    </div>
+  </section>
+  <!-- Footer -->
+  <footer class="text-center text-sm py-6">
+    &copy; 2025 AIspire | Built for the National Career Hackathon
+  </footer>
+  <script>
+    const ADMIN_PASSWORD = "YourSecret123"; // Change this to your secure password
+
+    document.getElementById("adminLoginBtn").addEventListener("click", function (e) {
+      e.preventDefault();
+      const enteredPass = prompt("Enter Admin Password:");
+      if (enteredPass === ADMIN_PASSWORD) {
+        localStorage.setItem("isAdmin", "true");
+        window.location.href = "admin.html";
+      } else {
+        alert("Incorrect Password!");
+      }
+    });
+  </script>
+
+</body>
+
+</html>

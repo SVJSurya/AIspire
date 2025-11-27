@@ -1,0 +1,29 @@
+# Ignore specific large files
+final_ppt.pptx
+Final_Vid_Statathon.mp4
+
+# Ignore evaluation folder
+evaluation/
+
+# Ignore Python cache and virtual env ONLY inside backend
+backend/venv/
+backend/.venv/
+backend/env/
+backend/__pycache__/
+backend/**/__pycache__/
+
+# General Python ignores (safe)
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+
+# Virtual environments (if accidentally created elsewhere)
+venv/
+.env/
+env/
+.venv/
+
+# OS junk
+.DS_Store
+Thumbs.db

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Accessible Career Portal — CareerScope.ai</title>
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="accessible.css" />
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to bottom right, rgba(83, 167, 220, 0.7), rgba(255, 255, 255, 0.6), rgba(141, 221, 235, 0.7));
+      /* 🇮🇳 Tricolor with transparency */
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 85vh;
+    }
+
+    main.accessible-container {
+      background: rgba(255, 255, 255, 0.15);
+      /* Transparent glass effect */
+      padding: 2rem;
+      border-radius: 15px;
+      max-width: 650px;
+      width: 90%;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
+      text-align: center;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .accessible-search input,
+    .accessible-search button {
+      padding: 0.6rem 1rem;
+      font-size: 1rem;
+      border-radius: 8px;
+      border: 2px solid #333;
+      margin: 0.4rem 0.3rem;
+    }
+
+    .accessible-search button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    .accessible-search button:hover {
+      background-color: #0056b3;
+    }
+
+    .accessibility-controls {
+      margin-top: 1.5rem;
+    }
+
+    .accessibility-controls button {
+      padding: 0.6rem 1rem;
+      font-size: 1rem;
+      border: none;
+      background-color: #222;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+      margin: 0.3rem;
+    }
+
+    .accessibility-controls input[type="checkbox"] {
+      margin-left: 0.5rem;
+      transform: scale(1.3);
+    }
+
+    .results-area {
+      margin-top: 1.2rem;
+      text-align: left;
+      background-color: rgba(244, 244, 244, 0.3);
+      padding: 1rem;
+      border-radius: 10px;
+      min-height: 100px;
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    footer {
+      margin-top: 1.5rem;
+      font-size: 0.9rem;
+      color: #333;
+    }
+
+    /* ♿ High Contrast Mode */
+    .high-contrast {
+      background-color: black !important;
+      color: yellow !important;
+    }
+
+    .high-contrast input,
+    .high-contrast button,
+    .high-contrast .card,
+    .high-contrast .results-area {
+      background-color: black !important;
+      color: yellow !important;
+      border: 2px solid yellow !important;
+    }
+  </style>
+
+</head>
+
+<body>
+  <main class="accessible-container" role="main">
+    <h1 tabindex="0" aria-label="Inclusive Career Search">♿ Inclusive Career Search</h1>
+    <p tabindex="0" aria-label="Portal for people with disabilities to search for jobs.">
+      This portal is designed for people with disabilities to search for careers using an accessible interface.
+    </p>
+
+    <!-- Accessible Search -->
+    <div class="accessible-search" role="search">
+      <label for="accessible-query">Search Job:</label>
+      <input id="accessible-query" type="text" placeholder="e.g., jobs for visually impaired"
+        aria-label="Job search input" tabindex="0" />
+      <button onclick="searchAccessibleJobs()" aria-label="Search Button" tabindex="0">Search</button>
+    </div>
+
+    <!-- Accessibility Controls -->
+    <div class="accessibility-controls" role="region" aria-label="Accessibility Tools">
+      <button onclick="readResultsAloud()" aria-label="Read search results aloud" tabindex="0">🔊 Read Results</button>
+      <button onclick="toggleContrast()" aria-label="Toggle high contrast mode" tabindex="0">🌓 High Contrast</button>
+      <label>
+        <input type="checkbox" id="lang-dis-toggle" onchange="toggleLangDis()" aria-label="Language Toggle"
+          tabindex="0" />
+        <span id="lang-dis-label">हिन्दी</span>
+      </label>
+    </div>
+
+    <!-- Search Results -->
+    <div id="accessible-results" class="results-area" tabindex="0" role="region" aria-live="polite">
+      <!-- Search results will appear here -->
+    </div>
+
+    <!-- Footer -->
+    <footer>
+      <p>Built with ❤️ for inclusive opportunity at the National Career Hackathon</p>
+    </footer>
+  </main>
+
+  <script src="accessible.js"></script>
+</body>
+
+</html>
